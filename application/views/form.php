@@ -4,17 +4,12 @@
 	<title></title>
 </head>
 <body>
-<form>
-	Nama <br>
-	<input type="text" name="username"><br>
-	Password <br>
-	<input type="password" name="password"><br>
-	Level
-	<select>
-		<option value="admin">Admin</option>
-		<option value="User">User</option>
-	</select>
-	<input type="submit" name="simpan" value="save">
+<form action="masukkan" method="post">
+<div><input type="text" name="username" placeholder="Masukan Username"></div>
+<div><input type="password" name="password" placeholder="Masukan Password"></div>
+<div><input type="text" name="fullname" placeholder="Masukan Fullname"></div>
+<div><input type="text" name="level" placeholder="Masukan Level"></div>
+<div><input type="submit" name="Kirim" value="Kirim"></div>
 </form>
 </body>
 </html>

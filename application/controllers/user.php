@@ -3,23 +3,157 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class User extends CI_Controller {
 
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see https://codeigniter.com/user_guide/general/urls.html
-	 */
-	public function form()
+	public function __construct()
 	{
-		$this->load->view('form.php');
+		parent::__construct();
+		//Load Dependencies
+
+	}
+
+	// List all your items 
+	public function index()
+	{
+		$data['isi'] = $this->db->get('user');//membuka tabel user dan mengambil data tiap field dan ditampung di variabel isi
+		$this->load->view('view' , $data);//membuka form index dan memasukkan variabel data
+	}
+
+	// Add a new item
+	public function add()
+	{
+		$this->load->view('form');//memanggil form untuk input data yg berada di folder user
+	}
+
+	public function masukkan()
+	{
+		# code...
+		$input = array('username' => $this->input->post('username'),'password' => $this->input->post('password'),'fullname' => $this->input->post('fullname'),'level' => $this->input->post('level'));//data inputan dari form disimpan ke dalam array
+
+		$insert=$this->db->insert('user' , $input );//data inputan yg disimpan dimasukkan ke dalam tabel user
+
+		if ($insert) {
+
+
+            echo "sukses";//jika proses memasukkan berhasil maka prin sukses dan sebaliknya
+
+        } else {
+
+            echo "gagal";
+
+        }
+	}
+	//Update one item
+	public function update($id = '')//mengambil sebuah value dari link localhost/.....
+	{
+		
+			# code...
+			$this->db->where('id',$id);//memasukkan id yg tadi sudah ditentukan lalu memilih id trsb
+
+			$data['isi'] = $this->db->get('user');//mengambil tabel user
+
+			$this->load->view('form',$data);//meload form update untuk update file
+		
+	}
+
+	public function gantikan( $id = '')
+	{
+		# code...
+		$input = array('username' => $this->input->post('username'),'password' => $this->input->post('password'),'fullname' => $this->input->post('fullname'),'level' => $this->input->post('level'));//menampung data update tadi kedalam array
+		$this->db->where('id',$id);//memasukkan id yg tadi sudah ditentukan lalu memilih id trsb
+		$insert=$this->db->update('user' , $input );//memasukkan data tai ke dalam tabel user
+
+		if ($insert) {
+
+
+            echo "sukses";
+
+        } else {
+
+            echo "gagal";
+
+        }
+
+	}
+
+	//Delete one item
+	public function delete( $id = '' )//mengambil id yg tadi sudah dipilih
+	{  
+		$this->db->where('id',$id);//memasukkan id yg sudah dipilih dan menentukan id mana yg akan dihapus
+
+			$this->db->delete('user');//menghapus tabel /id yg sudah dipilih
+
+			redirect('user','refresh');//kembali ke controller User dan melakukan refresh page
+
+		/*if($this->input->post('submit'))
+		{
+
+			$id = $this->input->post('id');
+
+			$this->db->where('id',$id);
+
+			$this->db->delete('user');
+
+			redirect('User','refresh');
+		}*/
+	}
+
+	/*public function update2()//belum jadi
+	{
+		if ($this->input->post('submit')) {
+			# code...
+			$id = $this->input->post('id');
+
+			$this->db->where('id',$id);
+
+			$data['isi'] = $this->db->get('user');
+
+			$this->load->view('form/update2',$data);
+		}
+	}
+
+	public function gantikan2()//belum jadi
+	{
+		
+		
+		if ($this->input->post('submit'))
+		{
+			# code...
+			
+
+			$input = array('username' => $this->input->post('username'),'password' => $this->input->post('password'),'fullname' => $this->input->post('fullname'),'level' => $this->input->post('level'));
+
+			$id = $this->input->post('id');
+			$this->db->where('id',$id);
+
+			$this->db->update('user' , $input );//
+
+			redirect('User','refresh');
+		}
+		
+	}*/
+
+	public function delete2()
+	{  
+
+		if($this->input->post('Kirim'))
+		{
+
+			$id = $this->input->post('id');
+
+			$this->db->where('id',$id);
+
+			$this->db->delete('user');
+
+			redirect('user','refresh');
+		}
+	}
+
+	public function login()
+	{
+		if (condition) {
+			# code...
+		}
 	}
 }
+
+/* End of file user.php */
+/* Location: ./application/controllers/user.php */
